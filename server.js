@@ -41,6 +41,7 @@ app.get('/profile', function(req, res) {
       }
       res.render('pages/profile.ejs', {
         name: obj.name,
+        picture: obj.picture_url,
         data: data
       });
     });
