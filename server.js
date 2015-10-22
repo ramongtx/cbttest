@@ -30,11 +30,11 @@ app.get('/profile', function(req, res) {
     getUserInfo(req.session.loginData, function(data) {
       var obj = {};
       obj.name = "";
-      try {
-        obj = JSON.parse(data);
-      } catch (e) {
-        return console.error(e);
-      }
+      // try {
+      //   obj = JSON.parse(data);
+      // } catch (e) {
+      //   return console.error(e);
+      // }
       res.render('pages/profile.ejs', {
         name: obj.name,
         data: data
