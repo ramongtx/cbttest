@@ -23,15 +23,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
-  if (!isLoggedIn(req)) {
     res.render('pages/index');
-  } else {
-    res.redirect('/profile');
-  }
 });
 
 app.get('/profile', function(req, res) {
-  if (isLoggedIn(req)) {
     getUserInfo(req.session.loginData, function(data) {
       var obj = {};
       obj.name = "";
@@ -45,9 +40,6 @@ app.get('/profile', function(req, res) {
         data: data
       });
     });
-  } else {
-    res.redirect('/');
-  }
 });
 
 app.post('/login', function(req, res) {
