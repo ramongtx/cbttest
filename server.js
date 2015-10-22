@@ -32,8 +32,14 @@ app.get('/', function(req, res) {
 
 app.get('/profile', function(req, res) {
   if (isLoggedIn(req)) {
-    getUserInfo(req.session.loginData, function (data) {
-      var obj = JSON.parse(data);
+    getUserInfo(req.session.loginData, function(data) {
+      var obj = {};
+      obj.name = "";
+      try {
+        obj = JSON.parse(data);
+      } catch (e) {
+        return console.error(e);
+      }
       res.render('pages/profile.ejs', {
         name: obj.name,
         data: data
@@ -63,7 +69,7 @@ function isLoggedIn(req) {
   return false;
 }
 
-function getUserInfo(loginData,callback) {
+function getUserInfo(loginData, callback) {
   var host = 'api-staging.socialidnow.com';
   var path = '/v1/marketing/login/info'
   var parameters = 'api_secret=' + process.env.API_SECRET;
