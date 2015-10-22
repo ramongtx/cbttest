@@ -23,23 +23,26 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
+  if (!isLoggedIn(req)) {
     res.render('pages/index');
+  } else {
+    res.redirect('/profile');
+  }
 });
 
 app.get('/profile', function(req, res) {
+  if (isLoggedIn(req)) {
     getUserInfo(req.session.loginData, function(data) {
       var obj = {};
       obj.name = "";
-      // try {
-      //   obj = JSON.parse(data);
-      // } catch (e) {
-      //   return console.error(e);
-      // }
       res.render('pages/profile.ejs', {
         name: obj.name,
         data: data
       });
     });
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.post('/login', function(req, res) {
