@@ -3,18 +3,16 @@
 
 <head>
   <% include ../partials/header.ejs %>
-  <script type="text/javascript" src="/js/index.js"></script>
 </head>
 
 <body>
+
   <div class="jumbotron text-center">
     <div class="container">
-      <h1>Bem-vindo!</h1>
+      <h1>Bem-vindo <%= name %>!</h1>
       <p>Faça o login usando uma das suas redes sociais:</p>
-      <script>socialLoad()</script>
-      <div>
-        <div id='login­c6ab6f67'></div>
-      </div>
+      <a type="button" class="btn btn-lg btn-default" href="/logout">
+        <span class="glyphicon glyphicon-log-out"></span> LOGOUT</a>
     </div>
   </div>
   <div class="container">
