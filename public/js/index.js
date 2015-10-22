@@ -10,7 +10,6 @@ function socialLoad() {
       "showSocialIdLink": true
     });
     socialid.events.onLoginSuccess.addHandler(function(data) {
-      console.log("Website received onLoginSuccess: ", data);
       $.ajax({
         type: "POST",
         url: '/login',
