@@ -16,10 +16,14 @@ function socialLoad() {
         url: '/login',
         data: data,
         cache: false,
-        dataType: "json",
-        success: (function() {
-          alert("SUCCESS")
-        })
+        success: function(data) {
+          if (data == "ok") {
+            window.location="/profile";
+          }
+        },
+        error: function (e) {
+          alert("ERROR ("+e.status+" - "+e.statusText+"): "+e.responseText);
+        }
       });
     });
   };
