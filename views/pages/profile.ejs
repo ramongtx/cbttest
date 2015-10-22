@@ -3,26 +3,29 @@
 
 <head>
   <% include ../partials/header.ejs %>
+  <script type="text/javascript" src="/js/profile.js"></script>
+  <script>socialLoad()</script>
 </head>
 
 <body>
 
-  <div class="jumbotron text-center">
+  <div class="jumbotron text-center primarybackground">
     <div class="container">
       <a href="/">
-        <img src=<%= picture%>>
+        <img class="profile-picture" src=<%= picture%>>
       </a>
-      <h1>Bem-vindo
-        <%= name %>!</h1>
-      <p>Faça o login usando uma das suas redes sociais:</p>
+      <h1>Bem-vindo <%= name %>!</h1>
+      <p>Conecte-se com mais redes sociais ou faça logout:</p>
+      <div class="widget">
+        <div id='connectsocialid' class="socialidcontainer"></div>
+      </div>
+      <br>
       <a type="button" class="btn btn-lg btn-default" href="/logout">
         <span class="glyphicon glyphicon-log-out"></span> LOGOUT</a>
     </div>
   </div>
   <div class="container">
-    <div class="alert alert-success text-center" role="alert">
-      <%= data %>
-    </div>
+      <pre><%- JSON.stringify(data,null,2) %></pre>
     <hr>
     <!-- row -->
   </div>

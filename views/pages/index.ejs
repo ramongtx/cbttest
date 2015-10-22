@@ -3,24 +3,24 @@
 
 <head>
   <% include ../partials/header.ejs %>
-  <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script>socialLoad()</script>
 </head>
 
 <body>
-  <div class="jumbotron text-center">
+
+  <div class="jumbotron text-center primarybackground">
     <div class="container">
       <h1>Bem-vindo!</h1>
       <p>Faça o login usando uma das suas redes sociais:</p>
-      <script>socialLoad()</script>
+      <div class="widget">
+        <div id='login­c6ab6f67' class="socialidcontainer"></div>
+      </div>
       <div>
-        <div id='login­c6ab6f67'></div>
       </div>
     </div>
   </div>
   <div class="container">
-    <div class="alert alert-success text-center" role="alert">
-      To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" class="alert-link">Getting Started with Node on Heroku</a> tutorial.
-    </div>
     <hr>
     <!-- row -->
   </div>

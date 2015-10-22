@@ -33,16 +33,19 @@ app.get('/', function(req, res) {
 app.get('/profile', function(req, res) {
   if (isLoggedIn(req)) {
     getUserInfo(req.session.loginData, function(data) {
-      var obj = {name: ""};
+      var obj = {
+        name: ""
+      };
       try {
         obj = JSON.parse(data);
+        req.session.userData = obj;
       } catch (e) {
         console.error(e);
       }
       res.render('pages/profile.ejs', {
         name: obj.name,
         picture: obj.picture_url,
-        data: data
+        data: obj
       });
     });
   } else {
@@ -52,13 +55,14 @@ app.get('/profile', function(req, res) {
 
 app.post('/login', function(req, res) {
   req.session.loginData = req.body;
-  console.log('loginData', req.session.loginData);
   res.end('ok');
 });
 
 // route for logging out
 app.get('/logout', function(req, res) {
-  if (req.session.loginData) req.session.loginData = {};
+  logoutSocialID(req.session.userData);
+  if (req.session.loginData) req.session.loginData = null;
+  if (req.session.userData) req.session.userData = null;
   res.redirect('/');
 });
 
@@ -72,14 +76,14 @@ function isLoggedIn(req) {
 function getUserInfo(loginData, callback) {
   var host = 'api-staging.socialidnow.com';
   var path = '/v1/marketing/login/info'
-  var parameters = 'api_secret=' + process.env.API_SECRET;
+  var parameters = '?api_secret=' + process.env.API_SECRET;
   parameters += '&token=' + loginData.token;
   parameters += "&fields=display_name,picture_url";
 
   var optionsget = {
-    host: 'api-staging.socialidnow.com',
+    host: host,
     port: 443,
-    path: '/v1/marketing/login/info?' + parameters,
+    path: path + parameters,
     method: 'GET',
     headers: {
       'Accept': '*/*'
@@ -89,9 +93,9 @@ function getUserInfo(loginData, callback) {
   var reqGet = https.request(optionsget, function(res) {
     var str = ""
     res.on('data', function(d) {
-      str+=d;
+      str += d;
     });
-    res.on('end',function(){
+    res.on('end', function() {
       callback(str)
     });
   });
@@ -100,6 +104,41 @@ function getUserInfo(loginData, callback) {
   reqGet.on('error', function(e) {
     console.error(e);
   });
+}
+
+function logoutSocialID(userData) {
+  if (userData && userData.connection_id) {
+    var host = 'api-staging.socialidnow.com';
+    var path = '/v1/marketing/login/connections/:' + userData.connection_id;
+    var optionsdelete = {
+      host: host,
+      port: 443,
+      path: path,
+      method: 'DELETE',
+      auth: '301:' + process.env.API_SECRET,
+      headers: {
+        'Accept': '*/*',
+        'Content-Length': 0
+      },
+    }
+
+    var reqDelete = https.request(optionsdelete, function(res) {
+      var str = ""
+      console.log(res.statusCode)
+      res.on('data', function(d) {
+        str += d;
+      });
+      res.on('end', function() {
+        console.log(str)
+      });
+    });
+
+    reqDelete.end();
+    reqDelete.on('error', function(e) {
+      console.error(e);
+    });
+
+  }
 }
 
 app.listen(app.get('port'), function() {
