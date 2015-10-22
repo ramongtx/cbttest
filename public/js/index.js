@@ -18,11 +18,11 @@ function socialLoad() {
         cache: false,
         success: function(data) {
           if (data == "ok") {
-            window.location="/profile";
+            window.location = "/profile";
           }
         },
-        error: function (e) {
-          alert("ERROR ("+e.status+" - "+e.statusText+"): "+e.responseText);
+        error: function(e) {
+          alert("ERROR (" + e.status + " - " + e.statusText + "): " + e.responseText);
         }
       });
     });

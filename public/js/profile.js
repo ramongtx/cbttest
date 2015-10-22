@@ -10,5 +10,9 @@ function socialLoad() {
       "showSocialIdLink": true,
       "loadCSS": true
     });
+    document.getElementById("logoutbutton").onclick = function () {
+      socialid.login.logout();
+      window.location = '/logout';
+    };
   };
 }

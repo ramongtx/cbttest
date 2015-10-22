@@ -8,29 +8,25 @@
 </head>
 
 <body>
-
   <div class="jumbotron text-center primarybackground">
     <div class="container">
       <a href="/">
         <img class="profile-picture" src=<%= picture%>>
       </a>
       <h1>Bem-vindo <%= name %>!</h1>
-      <p>Conecte-se com mais redes sociais ou faça logout:</p>
       <div class="widget">
         <div id='connectsocialid' class="socialidcontainer"></div>
       </div>
       <br>
-      <a type="button" class="btn btn-lg btn-default" href="/logout">
-        <span class="glyphicon glyphicon-log-out"></span> LOGOUT</a>
+      <a type="button" class="btn btn-lg btn-default" id="logoutbutton">
+        <span class="glyphicon glyphicon-log-out"></span> LOGOUT
+      </a>
     </div>
   </div>
   <div class="container">
-      <pre><%- JSON.stringify(data,null,2) %></pre>
+    <pre><%- JSON.stringify(data,null,2) %></pre>
     <hr>
-    <!-- row -->
   </div>
-
-
 </body>
 
 </html>
