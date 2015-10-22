@@ -33,8 +33,12 @@ app.get('/', function(req, res) {
 app.get('/profile', function(req, res) {
   if (isLoggedIn(req)) {
     getUserInfo(req.session.loginData, function(data) {
-      var obj = {};
-      obj.name = "";
+      var obj = {name: ""};
+      try {
+        obj = JSON.parse(data);
+      } catch (e) {
+        console.error(e);
+      }
       res.render('pages/profile.ejs', {
         name: obj.name,
         data: data
@@ -82,8 +86,12 @@ function getUserInfo(loginData, callback) {
   }
 
   var reqGet = https.request(optionsget, function(res) {
+    var str = ""
     res.on('data', function(d) {
-      callback(d);
+      str+=d;
+    });
+    res.on('end',function(){
+      callback(str)
     });
   });
 
