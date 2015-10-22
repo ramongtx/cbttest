@@ -13,6 +13,9 @@
 .jumbotron {
   padding-bottom: 80px;
 }
+.bricks ul li {
+  width: 220px;
+}
 .jumbotron p {
   max-width: 75%;
   margin: 1em auto 2em;
